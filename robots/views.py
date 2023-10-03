@@ -1,9 +1,12 @@
 import http
 import json
+import datetime as dt
 
-from django.http import JsonResponse
+from django.http import JsonResponse, FileResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_GET
 
+from .utils import RobotsReport
 from .forms import RobotForm
 
 
@@ -31,3 +34,13 @@ def create_robot(request):
 
     else:
         return JsonResponse({'message': 'Invalid request method'}, status=http.HTTPStatus.METHOD_NOT_ALLOWED)
+
+
+@require_GET
+def download_report(request):
+    file = RobotsReport()
+    file_path = file.get_report()
+    return FileResponse(
+        open(file_path, 'rb'),
+        filename=f'Отчет производства роботов {dt.datetime.now().strftime("%d-%B-%Y")}.xlsx'
+    )
