@@ -2,12 +2,18 @@ import http
 import json
 import datetime as dt
 
+from django.shortcuts import render
 from django.http import JsonResponse, FileResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET
 
 from .utils import RobotsReport
 from .forms import RobotForm
+
+
+@require_GET
+def index(request):
+    return render(request, 'index.html')
 
 
 @csrf_exempt
