@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Производство роботов{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <h1> Производство роботов </h1>
+        <div class="card-body">
+            <a href="{% url 'robots:download_report' %}">Скачать отчет производства роботов за неделю</a>
+        </div>
+        <div class="card-body">
+            <a href="{% url 'orders:create_order' %}">Оставить заявку на Робота</a>
+        </div>
+    </div>
+{% endblock %}
