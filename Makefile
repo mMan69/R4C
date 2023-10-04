@@ -5,4 +5,11 @@ build:
 up:
 	docker run --name $(SERVICE) -p 8000:8000 --rm -v ${PWD}:/app -it $(SERVICE) ./start.sh
 bash:
-	docker run -v ${PWD}:/app -it $(SERVICE) /bin/bash
+	docker exec -it $(SERVICE) /bin/bash
+test:
+	docker exec -it $(SERVICE) pytest $T
+
+# Запустить отдельный тест
+# T=tests/test_robots.py::TestCreateRobot::test_post_create_robot make test
+
+
