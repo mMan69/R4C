@@ -1,0 +1,22 @@
+name: Backend Tests
+
+#on:
+#  pull_request:
+#    branches:
+#      - main
+
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build Docker image
+        run: docker build --rm --force-rm -t robot-factory .
+      - name: Run Docker container
+        run: docker run --name robot-factory -v ${PWD}:/app --rm -d robot-factory ./start.sh
+      - name: Run tests
+        run: docker exec robot-factory pytest
