@@ -1,7 +1,7 @@
 SERVICE=robot-factory
 
 build:
-	docker build --rm --force-rm --tag $(SERVICE) .
+	docker build --rm --force-rm -t $(SERVICE) .
 up:
 	docker run --name $(SERVICE) -p 8000:8000 --rm -v ${PWD}:/app -it $(SERVICE) ./start.sh
 bash:
