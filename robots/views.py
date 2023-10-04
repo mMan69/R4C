@@ -23,7 +23,7 @@ def create_robot(request):
             data = json.loads(request.body)
 
         except json.JSONDecodeError:
-            return JsonResponse({'message': 'Invalid json'})
+            return JsonResponse({'message': 'Invalid json'}, status=http.HTTPStatus.BAD_REQUEST)
 
         form = RobotForm(data)
 

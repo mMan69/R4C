@@ -16,20 +16,13 @@ class Robot(models.Model):
     def __repr__(self):
         return f'{self.serial}, {self.model}, {self.version}, {self.created}'
 
-    def send_email(self):
-        from orders.models import Order
-
-        order = Order.objects.filter(
-            robot_serial=self.serial,
-            is_notified=False,
-            is_pending=True
-        ).first()
+    def send_email(self, order):
 
         subject = 'Производство Роботов'
 
-        message = f'''Добрый день!
-        Недавно вы интересовались нашим роботом модели {self.model}, версии {self.version}. 
-        Этот робот теперь в наличии. Если вам подходит этот вариант - пожалуйста, свяжитесь с нами'''
+        message = (f'Добрый день!\n'
+                   f'Недавно вы интересовались нашим роботом модели {self.model}, версии {self.version}.\n'
+                   f'Этот робот теперь в наличии. Если вам подходит этот вариант - пожалуйста, свяжитесь с нами.')
 
         send_mail(subject, message, EMAIL_HOST_USER, [order.customer])
 
