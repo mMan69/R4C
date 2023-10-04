@@ -5,5 +5,5 @@ from .models import Order
 
 @admin.register(Order)
 class RobotAdmin(admin.ModelAdmin):
-    list_display = ('customer', 'robot_serial')
+    list_display = ('customer', 'robot_serial', 'is_pending', 'is_notified')
 
