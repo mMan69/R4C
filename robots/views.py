@@ -9,6 +9,7 @@ from django.views.decorators.http import require_GET
 
 from .utils import RobotsReport
 from .forms import RobotForm
+from .models import Robot
 
 
 @require_GET
@@ -45,6 +46,12 @@ def create_robot(request):
 @require_GET
 def download_report(request):
     file = RobotsReport()
+
+    robot = Robot.objects.filter(created__range=(file.start_date, file.end_date)).exists()
+
+    if not robot:
+        return render(request, "robots/robots_fail.html")
+
     file_path = file.get_report()
     return FileResponse(
         open(file_path, 'rb'),
